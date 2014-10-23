@@ -2,6 +2,7 @@ package com.mejorandola.ejemplo.data;
 
 import java.util.ArrayList;
 
+import android.R.bool;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +18,13 @@ public class  CustomAdapter extends ArrayAdapter<Room> {
 	
 	ArrayList<Room> data;
 	LayoutInflater inflater; // para inflar la vista
+	boolean is_list;
 
-	public CustomAdapter(Context context, ArrayList<Room> objects) {
+	public CustomAdapter(Context context, ArrayList<Room> objects ,boolean is_list) {
 		super(context, -1, objects);
 		// TODO Auto-generated constructor stub
 		//inicializamos dentro del adapter
+		this.is_list = is_list;
 		this.data = objects;
 		this.inflater = LayoutInflater.from(context);		
 	}
@@ -48,8 +51,11 @@ public class  CustomAdapter extends ArrayAdapter<Room> {
 		
 		//si la vista nunca ha sido visualizada 
 		//converview es como si fuera la plantilla por cada item del listado
+		
+		int layout = is_list? R.layout.list_row:R.layout.grid_element;
+		
 		if(convertView == null){
-			convertView = inflater.inflate(R.layout.list_row, null);
+			convertView = inflater.inflate(layout, null);
 			holder = new ViewHolder();
 			holder.img = (ImageView) convertView.findViewById(R.id.img_row);
 			holder.title = (TextView) convertView.findViewById(R.id.txt_row_title);
